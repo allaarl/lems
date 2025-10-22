@@ -15,33 +15,45 @@ export function RoleStep() {
     useVolunteer();
 
   const handleNext = async () => {
-    if (needsDivision) {
-      setFieldValue('currentStep', LoginStep.Division);
-      return;
-    } else if (volunteerData && volunteerData.divisions.length === 1) {
-      // If only one division exists, auto-set it
-      setFieldValue('divisionId', volunteerData.divisions[0].id);
-    }
+    try {
+ 
+      if (needsDivision) {
+        console.log({needsDivision});
+        setFieldValue('currentStep', LoginStep.Division);
+        return;
+      } else if (volunteerData && volunteerData.divisions.length === 1) {
+        // If only one division exists, auto-set it
+        console.log('Auto-setting division to:', volunteerData.divisions[0].id);
+        setFieldValue('divisionId', volunteerData.divisions[0].id);
+      }
 
-    if (needsRoleInfo) {
-      setFieldValue('currentStep', LoginStep.RoleInfo);
-      return;
-    }
+      if (needsRoleInfo) {
+        console.log({needsRoleInfo});
+        setFieldValue('currentStep', LoginStep.RoleInfo);
+        return;
+      }
 
-    if (needsUser()) {
-      setFieldValue('currentStep', LoginStep.User);
-      return;
-    }
+      if (needsUser()) {
+        console.log('needsUser');
+        setFieldValue('currentStep', LoginStep.User);
+        return;
+      }
 
-    setFieldValue('currentStep', LoginStep.Password);
+      console.log('Proceeding to Password step');
+      setFieldValue('currentStep', LoginStep.Password);
+    } catch (error) {
+      console.error('Error in handleNext:', error);
+    }
   };
 
-  const handleRoleChange = (_event: React.SyntheticEvent, newValue: string | null) => {
+  const handleRoleChange = (_event: React.SyntheticEvent, newValue: string | null) => {    
     const role = newValue || '';
     setFieldValue('role', role);
     setSelectedRole(role || null);
     if (role) {
-      handleNext();
+      setTimeout(() => {
+        handleNext();
+      }, 10);
     }
   };
 

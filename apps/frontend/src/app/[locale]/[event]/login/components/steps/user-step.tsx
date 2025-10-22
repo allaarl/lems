@@ -16,6 +16,8 @@ export function UserStep() {
   const selectedVolunteer = options.find(v => v.id === values.userId) || null;
 
   const handleNext = async () => {
+    console.log(`User selected: ${selectedVolunteer?.identifier}`);
+    
     setFieldValue('currentStep', LoginStep.Password);
   };
 
