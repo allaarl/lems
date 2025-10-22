@@ -4,7 +4,6 @@ import { Typography, Autocomplete, TextField, Box, Paper, alpha } from '@mui/mat
 import { useTranslations } from 'next-intl';
 import { useFormikContext } from 'formik';
 import { LoginFormValues, LoginStep } from '../../types';
-import { NextStepButton } from '../next-step-button';
 import { useUserOptions } from '../../hooks/use-user-options';
 
 export function UserStep() {
@@ -41,6 +40,9 @@ export function UserStep() {
         value={selectedVolunteer}
         onChange={(_, newValue) => {
           setFieldValue('userId', newValue?.id || '');
+          if (newValue) {
+            handleNext();
+          }
         }}
         renderInput={params => (
           <TextField
@@ -80,7 +82,6 @@ export function UserStep() {
         }}
         sx={{ mb: 3 }}
       />
-      <NextStepButton onClick={handleNext} />
     </Box>
   );
 }

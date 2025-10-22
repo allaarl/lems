@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useFormikContext } from 'formik';
 import { useRoleTranslations } from '@lems/localization';
 import { LoginFormValues, LoginStep } from '../../types';
-import { NextStepButton } from '../next-step-button';
 import { useVolunteer } from '../volunteer-context';
 
 export function RoleStep() {
@@ -41,6 +40,9 @@ export function RoleStep() {
     const role = newValue || '';
     setFieldValue('role', role);
     setSelectedRole(role || null);
+    if (role) {
+      handleNext();
+    }
   };
 
   return (
@@ -93,7 +95,6 @@ export function RoleStep() {
         }}
         sx={{ mb: 3 }}
       />
-      <NextStepButton onClick={handleNext} />
     </Box>
   );
 }

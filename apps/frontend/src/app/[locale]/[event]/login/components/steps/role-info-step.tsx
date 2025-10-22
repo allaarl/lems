@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useFormikContext } from 'formik';
 import { LoginFormValues, LoginStep } from '../../types';
 import { useRoleInfoOptions, getRoleInfoType } from '../../hooks/use-role-info-options';
-import { NextStepButton } from '../next-step-button';
 import { useVolunteer } from '../volunteer-context';
 
 export function RoleInfoStep() {
@@ -56,6 +55,9 @@ export function RoleInfoStep() {
         value={selectedOption}
         onChange={(_, newValue) => {
           setFieldValue('roleInfoValue', newValue || { id: '', name: '' });
+          if (newValue) {
+            handleNext();
+          }
         }}
         renderInput={params => (
           <TextField
@@ -95,7 +97,6 @@ export function RoleInfoStep() {
         }}
         sx={{ mb: 3 }}
       />
-      <NextStepButton onClick={handleNext} />
     </Box>
   );
 }

@@ -4,7 +4,6 @@ import { Typography, Autocomplete, TextField, Box, Paper, alpha } from '@mui/mat
 import { useTranslations } from 'next-intl';
 import { useFormikContext } from 'formik';
 import { LoginFormValues, LoginStep } from '../../types';
-import { NextStepButton } from '../next-step-button';
 import { useVolunteer } from '../volunteer-context';
 
 export function DivisionStep() {
@@ -24,7 +23,7 @@ export function DivisionStep() {
 
   const selectedDivision = availableDivisions.find(d => d.id === values.divisionId) || null;
 
-  const handleNext = async () => {
+  const handleNext = () => {
     if (needsRoleInfo) {
       setFieldValue('currentStep', LoginStep.RoleInfo);
       return;
@@ -59,6 +58,9 @@ export function DivisionStep() {
         value={selectedDivision}
         onChange={(_, newValue) => {
           setFieldValue('divisionId', newValue?.id || '');
+          if (newValue) {
+            handleNext();
+          }
         }}
         renderInput={params => (
           <TextField
@@ -124,7 +126,6 @@ export function DivisionStep() {
         )}
         sx={{ mb: 3 }}
       />
-      <NextStepButton onClick={handleNext} />
     </Box>
   );
 }
